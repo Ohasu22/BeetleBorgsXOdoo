@@ -259,10 +259,17 @@ function handleLogout() {
     cartItems = [];
     selectedProduct = null;
     navigation.style.display = 'none';
+
+    // Reset auth state to credentials
+    authStep = 'credentials';
+    clearOtpTimer();
+    renderLoginPage();
+
     showPage('login');
     updateCartBadge();
     showToast("You've been logged out. See you soon! 👋");
 }
+
 
 // Product Functions
 function createProductCard(product, showActions = true) {
