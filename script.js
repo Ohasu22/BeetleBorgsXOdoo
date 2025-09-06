@@ -497,6 +497,14 @@ function handleAddProduct(e) {
     e.preventDefault();
     
     const formData = new FormData(e.target);
+    const imageInput = document.getElementById('product-image');
+    let imageUrl = 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=300&fit=crop';
+
+    // If user uploads an image, create a local URL
+    if (imageInput.files && imageInput.files[0]) {
+        imageUrl = URL.createObjectURL(imageInput.files[0]);
+    }
+
     const newProduct = {
         id: generateId(),
         title: formData.get('title'),
@@ -504,11 +512,10 @@ function handleAddProduct(e) {
         category: formData.get('category'),
         condition: formData.get('condition'),
         description: formData.get('description'),
-        image: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=300&fit=crop',
-        co2Saved: Math.random() * 10 + 0.5 // Random CO2 savings
+        image: imageUrl,
+        co2Saved: Math.random() * 10 + 0.5
     };
     
-    // Add to both products and myListings
     products.push(newProduct);
     myListings.push(newProduct);
     
@@ -516,6 +523,7 @@ function handleAddProduct(e) {
     e.target.reset();
     showPage('my-listings');
 }
+
 
 function filterProducts(category) {
     selectedCategory = category;
